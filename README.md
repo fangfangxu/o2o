@@ -148,4 +148,111 @@
      </build>
      </project>
      
-3、逐层完成SSM的各项配置     
+3、逐层完成SSM的各项配置
+
+1、jdbc.properties
+    jdbc.driver=com.mysql.jdbc.Driver
+    jdbc.url=jdbc://localhost:3306/o2o?useUnicode=true&characterEncoding=utf8
+    jdbc.username=root
+    jdbc.password=123456
+    
+2、mybatis-config.xml
+
+           <?xml version="1.0" encoding="UTF-8"?>
+           <!DOCTYPE configuration
+                   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+                   "http://mybatis.org/dtd/mybatis-3-config.dtd">
+           <configuration>
+               <!-- 配置全局属性 -->
+               <settings>
+                   <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+                   <setting name="useGeneratedKeys" value="true" />
+    
+            <!-- 使用列标签替换列别名 默认:true -->
+            <setting name="useColumnLabel" value="true" />
+    
+            <!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+            <setting name="mapUnderscoreToCamelCase" value="true" />
+        </settings>
+    
+    </configuration>
+    
+3、spring-dao.xml
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        <!-- 配置整合mybatis过程 -->
+        <!-- 1.配置数据库相关参数properties的属性：${url} -->
+        <context:property-placeholder location="classpath:jdbc.properties"/>
+        <!-- 2.数据库连接池 -->
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+            <!--配置连接池属性-->
+            <property name="driverClass" value="${jdbc.driver}"/>
+            <property name="jdbcUrl" value="${jdbc.url}"/>
+            <property name="user" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+    
+            <!-- c3p0连接池的私有属性 -->
+            <property name="maxPoolSize" value="40" />
+            <property name="minPoolSize" value="10" />
+            <!-- 关闭连接后不自动commit -->
+            <property name="autoCommitOnClose" value="false" />
+            <!-- 获取连接超时时间 -->
+            <property name="checkoutTimeout" value="10000" />
+            <!-- 当获取连接失败重试次数 -->
+            <property name="acquireRetryAttempts" value="2" />
+        </bean>
+    
+        <!-- 3.配置SqlSessionFactory对象 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <!-- 注入数据库连接池 -->
+            <property name="dataSource" ref="dataSource" />
+            <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
+            <property name="configLocation" value="classpath:mybatis-config.xml" />
+            <!-- 扫描entity包 使用别名 -->
+            <property name="typeAliasesPackage" value="com.imooc.o2o.entity" />
+            <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+            <property name="mapperLocations" value="classpath:mapper/*.xml" />
+        </bean>
+    
+        <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            <!-- 注入sqlSessionFactory -->
+            <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+            <!-- 给出需要扫描Dao接口包 -->
+            <property name="basePackage" value="com.imooc.o2o.dao" />
+        </bean>
+    </beans>
+    
+4、spring-service.xml
+   
+       <?xml version="1.0" encoding="UTF-8"?>
+       <beans xmlns="http://www.springframework.org/schema/beans"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:context="http://www.springframework.org/schema/context"
+              xmlns:tx="http://www.springframework.org/schema/tx"
+              xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd">
+          <import resource="spring-dao.xml"/>
+           <!--扫描service包下所有使用注解的类型-->
+           <context:component-scan base-package="com.xufangfang.o2o.service"/>
+           <!--配置事务管理器-->
+           <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+           <!--注入数据库连接池-->
+               <property name="dataSource" ref="dataSource"/>
+           </bean>
+           <!--配置基于注解的声明式事务-->
+           <tx:annotation-driven transaction-manager="transactionManager"/>
+       </beans>
+ 
+ 
+ 5、        
