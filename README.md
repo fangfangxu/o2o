@@ -255,4 +255,92 @@
        </beans>
  
  
- 5、        
+ 5、spring-web.xml
+ 
+     <?xml version="1.0" encoding="UTF-8"?>
+     <beans xmlns="http://www.springframework.org/schema/beans"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:context="http://www.springframework.org/schema/context"
+            xmlns:mvc="http://www.springframework.org/schema/mvc"
+            xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+         <!--配置SpringMVC-->
+         <!--开启SpringMVC注解模式-->
+         <mvc:annotation-driven/>
+         <!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
+         <mvc:resources mapping="/resources/**" location="/resources/" />
+         <mvc:default-servlet-handler />
+     
+         <!-- 3.定义视图解析器 -->
+         <bean id="viewResolver"
+               class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+             <property name="prefix" value="/WEB-INF/html/"></property>
+             <property name="suffix" value=".html"></property>
+         </bean>
+     
+         <!-- 4.扫描web相关的bean -->
+         <context:component-scan base-package="com.xufangfang.o2o.web" />
+     </beans>
+
+
+6、将mybatis、spring配置整合在一起----配置web.xml
+
+    ?xml version="1.0" encoding="UTF-8"?>
+    web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+            version="3.1">
+   
+       <servlet>
+           <servlet-name>spring-dispatcher</servlet-name>
+           <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+           <init-param>
+               <param-name>contextConfigLocation</param-name>
+               <param-value>classpath:spring/spring-*.xml</param-value>
+           </init-param>
+       </servlet>
+   
+       <servlet-mapping>
+           <servlet-name>spring-dispatcher</servlet-name>
+           <url-pattern>/</url-pattern>
+       </servlet-mapping>
+   
+   
+       <welcome-file-list>
+           <welcome-file>hello.jsp</welcome-file>
+       </welcome-file-list>
+   
+     </web-app>
+     
+扩展：     
+      
+ 
+      (1)
+      <context:annotation-config />仅能够在已经在已经注册过的bean上面起作用。@AutoWired等生效             
+      (2)
+      <context:component-scan>做了<context:annotation-config>要做的事情，
+      还额外支持@Component，@Repository，@Service，@Controller @RestController
+      ,@ControllerAdvice, 和 @Configuration注解。
+      <context:component-scan>扫描base-package指定的包，
+      将标注了上述注解的类自动注册为Spring bean。 所以配置<context:component-scan>就不需要配置
+      <context:annotation- config/>
+      （3）mvc:annotation-driven 标签
+       这个标签以mvc作为命名空间，毫无疑问它是用在Spring MVC中的配置。用于配置注释驱动的
+       Spring MVC Controller编程模型
+      
+           对应的实现类是：org.springframework.web.servlet.config.AnnotationDrivenBeanDefinitionParser。
+           
+           这个类主要是用来向Spring 容器中注册以下Bean：
+           
+           RequestMappingHandlerMapping
+           BeanNameUrlHandlerMapping
+           RequestMappingHandlerAdapter
+           HttpRequestHandlerAdapter
+           SimpleControllerHandlerAdapter
+           ExceptionHandlerExceptionResolver
+           ResponseStatusExceptionResolver
+           DefaultHandlerExceptionResolver
