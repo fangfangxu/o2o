@@ -373,7 +373,7 @@
           <!--logger对象日志输出级别-->
           <property name="log.level" value="debug"/>
           <!--文件要保留多长时间-->
-          <property name="log.maxHistory" value="30"/>
+          <property name="log.maxHistory" value="10"/>
           <!--日志存储的根路径-->
           <property name="log.filePath" value="${catalina.base}/logs/webapps"/>
           <!--日志展现的格式-->
@@ -384,22 +384,19 @@
           <!--控制台设置-->
           <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
               <encoder>
-                  <parrern>${log.pattern}</parrern>
+                  <pattern>${log.pattern}</pattern>
               </encoder>
           </appender>
       
           <!--DEBUG-->
           <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-              <!--文件路径-->
               <file>${log.filePath}/debug.log</file>
               <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                  <!--文件名称-->
                   <fileNamePattern>${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-                  <!--文件最大保存历史数量-->
                   <maxHistory>${log.maxHistory}</maxHistory>
               </rollingPolicy>
               <encoder>
-                  <parrern>${log.pattern}</parrern>
+                  <pattern>${log.pattern}</pattern>
               </encoder>
               <filter class="ch.qos.logback.classic.filter.LevelFilter">
                   <level>DEBUG</level>
@@ -410,16 +407,16 @@
       
           <!--INFO-->
           <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-              <!--文件路径:先往info.log中去写日志，写满了再往rollingPolicy里去存-->
+              <!--文件路径:往info.log中去写当天日志-->
               <file>${log.filePath}/info.log</file>
               <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                  <!--文件名称：分离出来的文件的命名规则，一天产生一个文件-->
+                  <!--文件名称：分离出来的文件的命名夹规则${log.filePath}/info/，第二天压缩前一天的日志文件进入压缩包.gz：info.%d{yyyy-MM-dd}.log.gz-->
                   <fileNamePattern>${log.filePath}/info/info.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-                  <!--文件最大保存历史数量：log.filePath下最大保存的文件数量-->
+                  <!--文件最大保存历史数量：${log.filePath}/info下最大保存的压缩文件数量-->
                   <maxHistory>${log.maxHistory}</maxHistory>
               </rollingPolicy>
               <encoder>
-                  <parrern>${log.pattern}</parrern>
+                  <pattern>${log.pattern}</pattern>
               </encoder>
               <filter class="ch.qos.logback.classic.filter.LevelFilter">
                   <level>INFO</level>
@@ -430,16 +427,13 @@
       
           <!--ERROR-->
           <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-              <!--文件路径:先往error.log中去写日志，写满了再往rollingPolicy里去存-->
               <file>${log.filePath}/error.log</file>
               <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                  <!--文件名称：分离出来的文件的命名规则，一天产生一个文件-->
                   <fileNamePattern>${log.filePath}/error/error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-                  <!--文件最大保存历史数量：log.filePath下最大保存的文件数量-->
                   <maxHistory>${log.maxHistory}</maxHistory>
               </rollingPolicy>
               <encoder>
-                  <parrern>${log.pattern}</parrern>
+                  <pattern>${log.pattern}</pattern>
               </encoder>
               <filter class="ch.qos.logback.classic.filter.LevelFilter">
                   <level>ERROR</level>
@@ -465,14 +459,42 @@
       
       </configuration>
   
+   4、验证Logback的配置
 
+        1、pom：
+               <dependency>
+                   <groupId>ch.qos.logback</groupId>
+                   <artifactId>logback-classic</artifactId>
+                   <version>1.2.3</version>
+               </dependency>
 
+         2、Controller：
 
-
-
-
-
-
+        public class AreaController {        
+            Logger logger=LoggerFactory.getLogger(AreaController.class);       
+            @Autowired
+            private AreaService areaService;               
+            @RequestMapping(value = "/listarea",method = RequestMethod.GET)
+            @ResponseBody
+            private Map<String, Object> listArea() {
+                logger.info("=======start========");
+                long startTime=System.currentTimeMillis();
+                Map<String, Object> modelMap = new HashMap<>();
+                try {
+                    List<Area> areas = areaService.getAreaList();
+                    modelMap.put("rows", areas);
+                    modelMap.put("total", areas.size());
+                } catch (Exception e) {
+                    modelMap.put("success", false);
+                    modelMap.put("errMsg", e.toString());
+                }
+                logger.error("test error!");
+                long endTime=System.currentTimeMillis();
+                logger.debug("costTime[{}ms]",(endTime-startTime));
+                logger.info("=======end========");
+                return modelMap;               
+            }
+          
 
 
 
