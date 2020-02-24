@@ -500,4 +500,23 @@
 
     (1)Thumbnailator图片处理和封装Util
 
-
+     pom:
+           <!-- 图片处理 -->
+             <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+             <dependency>
+                 <groupId>net.coobird</groupId>
+                 <artifactId>thumbnailator</artifactId>
+                 <version>0.4.8</version>
+             </dependency>
+             
+             
+     eg:制作缩略图并增加水印：原图+水印 生成增加水印的图片并对原来的图片大小进行压缩
+         public static void main(String[] args) throws IOException {
+             //获取classPath的绝对值路径
+             String basePath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+             Thumbnails.of(new File("C:\\Users\\47284\\Desktop\\weixin.png"))
+                     .size(500,500).watermark(
+                             Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath+"\\watermark.jpg")),
+                             0.25f
+                     ).outputQuality(0.8f).toFile("C:\\Users\\47284\\Desktop\\weixin6.png");
+         }
