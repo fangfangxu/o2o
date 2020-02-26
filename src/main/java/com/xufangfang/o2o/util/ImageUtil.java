@@ -11,7 +11,9 @@ public class ImageUtil {
 
 
     public static void main(String[] args) throws IOException {
-        //获取classPath的绝对值路径
+        //获取classPath的绝对值路径 /target/classes
+        //0.25f：定义透明度
+        //压缩图片压缩比：0.8f
         String basePath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
         Thumbnails.of(new File("C:\\Users\\47284\\Desktop\\weixin.png"))
                 .size(500,500).watermark(
