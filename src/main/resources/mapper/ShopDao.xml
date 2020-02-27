@@ -5,7 +5,7 @@
 
 <mapper namespace="com.xufangfang.o2o.dao.ShopDao">
     <insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id"
-            keyProperty="">
+            keyProperty="shopId">
         INSERT INTO
             tb_shop(owner_id, area_id, shop_category_id,
                     shop_name, shop_desc, shop_addr,

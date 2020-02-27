@@ -682,3 +682,9 @@ c.PathUtil
             }
         
         }
+d.  @Transactional
+
+                //必须当且仅当抛出RuntimeException或者继承
+                //RuntimeException时，事务才会得以终止并回滚。
+                //如果是Exception，那么事务是没办法终止，该提交
+                //的就已经提交了并不会回滚

@@ -6,7 +6,7 @@ import com.xufangfang.o2o.enums.ShopStateEnum;
 
 import java.util.List;
 
-public class ShopException {
+public class ShopExecution {
     //结果状态
     private int state;
     //状态标识
@@ -19,17 +19,17 @@ public class ShopException {
     //shop列表
     private List<Shop> shopList;
 
-    public ShopException() {
+    public ShopExecution() {
     }
 
     //店铺操作失败的时候使用的构造器
-    public ShopException(ShopStateEnum stateEnum) {
+    public ShopExecution(ShopStateEnum stateEnum) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
     }
 
     //店铺操成功的时候使用的构造器
-    public ShopException(ShopStateEnum stateEnum, Shop shop) {
+    public ShopExecution(ShopStateEnum stateEnum, Shop shop) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
         this.shop = shop;
@@ -37,7 +37,7 @@ public class ShopException {
 
 
     //店铺操成功的时候使用的构造器
-    public ShopException(ShopStateEnum stateEnum, List<Shop> shopList) {
+    public ShopExecution(ShopStateEnum stateEnum, List<Shop> shopList) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
         this.shopList = shopList;
