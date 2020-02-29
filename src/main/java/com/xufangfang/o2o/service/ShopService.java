@@ -12,5 +12,5 @@ public interface ShopService {
      * @param shopImg
      * @return
      */
-    ShopExecution addShop(Shop shop, File shopImg);
+    ShopExecution addShop(Shop shop, File shopImg) ;
 }
