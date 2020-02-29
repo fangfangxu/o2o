@@ -25,7 +25,7 @@ public class HttpServletRequestUtil {
         try {
             return Double.valueOf(request.getParameter(key));
         } catch (Exception e) {
-            return -1d
+            return -1d;
         }
     }
 
