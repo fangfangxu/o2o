@@ -688,3 +688,87 @@ d.  @Transactional
                 //RuntimeException时，事务才会得以终止并回滚。
                 //如果是Exception，那么事务是没办法终止，该提交
                 //的就已经提交了并不会回滚
+                
+(2)jackson-databind json解析：将实体类、json互相转换                
+
+(3)从请求的session会话的上下文中获取文件流
+
+       代码如下：
+       CommonsMultipartFile shopImg = null;
+             CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+             if (commonsMultipartResolver.isMultipart(request)) {
+                 MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+                 shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
+             } else {
+                 modelMap.put("success", false);
+                 modelMap.put("errMsg", "上传图片不能为空！");
+                 return modelMap;
+             }
+             //2、注册店铺
+             if (shop != null && shopImg != null) {
+                 PersonInfo owner = new PersonInfo();
+                 owner.setUserId(1L);
+                 shop.setOwner(owner);
+     
+                 File imgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
+                 try {
+                     imgFile.createNewFile();
+                 } catch (IOException e) {
+                     modelMap.put("success", false);
+                     modelMap.put("errMsg", e.getMessage());
+                     return modelMap;
+                 }
+                 try {
+                     inputStreamToFile(shopImg.getInputStream(), imgFile);
+                 } catch (IOException e) {
+                     modelMap.put("success", false);
+                     modelMap.put("errMsg", e.getMessage());
+                     return modelMap;
+                 }
+                 ShopExecution shopExecution = shopService.addShop(shop, imgFile);
+                 if (shopExecution.getState() == ShopStateEnum.CHECK.getState()) {
+                     modelMap.put("success", true);
+                 } else {
+                     modelMap.put("success", false);
+                 }
+                 return modelMap;
+             } else {
+                 modelMap.put("success", false);
+                 modelMap.put("errMsg", "请输入店铺信息！");
+                 return modelMap;
+             }
+
+
+          /**
+              * 输入流转换成File
+              *
+              * @param ins
+              * @param file
+              */
+             private static void inputStreamToFile(InputStream ins, File file) {
+                 FileOutputStream os = null;
+                 try {
+                     os = new FileOutputStream(file);
+                     int bytesRead = 0;
+                     byte[] buffer = new byte[1024];
+                     while ((bytesRead = ins.read(buffer)) != -1) {
+                         os.write(buffer, 0, bytesRead);
+                     }
+                 } catch (Exception e) {
+                     throw new RuntimeException("调用inputStreamToFile产生异常:" + e.getMessage());
+                 } finally {
+                     try {
+                         if (os != null) {
+                             os.close();
+                         }
+                         if (ins != null) {
+         
+                             ins.close();
+                         }
+                     } catch (IOException e) {
+                         throw new RuntimeException("inputStreamToFile关闭io产生异常:" + e.getMessage());
+                     }
+                 }
+         
+             }
+                
