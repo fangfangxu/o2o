@@ -32,7 +32,7 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setShopCategory(shopCategory);
         shop.setArea(area);
-        shop.setShopName("测试的店铺1144441");
+        shop.setShopName("测试的店铺555");
         shop.setShopDesc("testxu111");
         shop.setShopAddr("test111");
         shop.setPhone("test111");

@@ -63,21 +63,6 @@ public class ShopManagementController {
             owner.setUserId(1L);
             shop.setOwner(owner);
 
-//            File imgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
-//            try {
-//                imgFile.createNewFile();
-//            } catch (IOException e) {
-//                modelMap.put("success", false);
-//                modelMap.put("errMsg", e.getMessage());
-//                return modelMap;
-//            }
-//            try {
-//                inputStreamToFile(shopImg.getInputStream(), imgFile);
-//            } catch (IOException e) {
-//                modelMap.put("success", false);
-//                modelMap.put("errMsg", e.getMessage());
-//                return modelMap;
-//            }
             ShopExecution shopExecution = null;
             try {
                 shopExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
@@ -103,39 +88,4 @@ public class ShopManagementController {
             return modelMap;
         }
     }
-
-    /**
-     * 输入流转换成File
-     *
-     * @param ins
-     * @param file
-     */
-//    private static void inputStreamToFile(InputStream ins, File file) {
-//        FileOutputStream os = null;
-//        try {
-//            os = new FileOutputStream(file);
-//            int bytesRead = 0;
-//            byte[] buffer = new byte[1024];
-//            while ((bytesRead = ins.read(buffer)) != -1) {
-//                os.write(buffer, 0, bytesRead);
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException("调用inputStreamToFile产生异常:" + e.getMessage());
-//        } finally {
-//            try {
-//                if (os != null) {
-//                    os.close();
-//                }
-//                if (ins != null) {
-//
-//                    ins.close();
-//                }
-//            } catch (IOException e) {
-//                throw new RuntimeException("inputStreamToFile关闭io产生异常:" + e.getMessage());
-//            }
-//        }
-//
-//    }
-
-
 }

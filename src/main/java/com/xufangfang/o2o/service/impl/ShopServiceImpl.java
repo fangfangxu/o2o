@@ -35,8 +35,7 @@ public class ShopServiceImpl implements ShopService {
             shop.setCreateTime(new Date());
             shop.setLastEditTime(new Date());
             int effectedNum = shopDao.insertShop(shop);
-//            throw new ShopOperationException("店铺创建失败");
-//            //2、
+        //2、
             if (effectedNum <= 0) {
                 throw new ShopOperationException("店铺创建失败");
             } else {
@@ -66,7 +65,6 @@ public class ShopServiceImpl implements ShopService {
 
         return new ShopExecution(ShopStateEnum.CHECK,shop);
     }
-
 
     private void addShopImg(Shop shop, InputStream shopImg,String fileName) {
         String path = ImageUtil.generateThumbnail(shopImg, fileName,PathUtil.getShopImagePath(shop.getShopId()));

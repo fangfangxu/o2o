@@ -104,11 +104,8 @@ public class ImageUtil {
      * @param fileName
      * @return
      */
-//    private static String getFileExtension(CommonsMultipartFile cFile) {
     private static String getFileExtension(String fileName) {
         //获取输入文件流的文件名
-//        String originalFileName = cFile.getOriginalFilename();
-//        String originalFileName = cFile.getName();
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
