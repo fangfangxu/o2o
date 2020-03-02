@@ -9,6 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -52,11 +53,11 @@ public class ImageUtil {
      * 可以直接转换成File
      * 在调用这个函数之前我们需要把  CommonsMultipartFile 转换成 File
      */
-    public static String generateThumbnail(File thumbnail, String targetAddr) {
+    public static String generateThumbnail(InputStream thumbnail, String fileName,String targetAddr) {
         //获取随机名
         String realFileName = getRandomFileName();
         //获取扩展名
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
         //若文件目录不存在、则创建出来
         makeDirPath(targetAddr);
         //相对路径
@@ -100,15 +101,15 @@ public class ImageUtil {
     /**
      * 获取输入文件流的扩展名
      *
-     * @param cFile
+     * @param fileName
      * @return
      */
 //    private static String getFileExtension(CommonsMultipartFile cFile) {
-    private static String getFileExtension(File cFile) {
+    private static String getFileExtension(String fileName) {
         //获取输入文件流的文件名
 //        String originalFileName = cFile.getOriginalFilename();
-        String originalFileName = cFile.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+//        String originalFileName = cFile.getName();
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
 

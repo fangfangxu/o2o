@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
 @Service("shopService")
@@ -22,7 +23,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, File shopImg) {
+    public ShopExecution addShop(Shop shop, InputStream shopImg,String fileName) {
         //空值判断
         if (shop == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
@@ -34,27 +35,27 @@ public class ShopServiceImpl implements ShopService {
             shop.setCreateTime(new Date());
             shop.setLastEditTime(new Date());
             int effectedNum = shopDao.insertShop(shop);
-            throw new ShopOperationException("店铺创建失败");
+//            throw new ShopOperationException("店铺创建失败");
 //            //2、
-//            if (effectedNum <= 0) {
-//                throw new ShopOperationException("店铺创建失败");
-//            } else {
-//                //判断传入的文件是否为空，不为空将图片存储到对应的目录里边
-//                if (shopImg != null) {
-//                    //存储图片, 成功后将图片地址更新到Shop中
-//                    try {
-//                        addShopImg(shop, shopImg);
-//                    } catch (Exception e) {
-//                        throw new ShopOperationException("addShopImg error:" + e.getMessage());
-//                    }
-//
-//                    //更新店铺的图片地址
-//                    effectedNum = shopDao.updateShop(shop);
-//                    if (effectedNum <= 0) {
-//                        throw new ShopOperationException("更新图片地址失败");
-//                    }
-//                }
-//            }
+            if (effectedNum <= 0) {
+                throw new ShopOperationException("店铺创建失败");
+            } else {
+                //判断传入的文件是否为空，不为空将图片存储到对应的目录里边
+                if (shopImg != null) {
+                    //存储图片, 成功后将图片地址更新到Shop中
+                    try {
+                        addShopImg(shop, shopImg,fileName);
+                    } catch (Exception e) {
+                        throw new ShopOperationException("addShopImg error:" + e.getMessage());
+                    }
+
+                    //更新店铺的图片地址
+                    effectedNum = shopDao.updateShop(shop);
+                    if (effectedNum <= 0) {
+                        throw new ShopOperationException("更新图片地址失败");
+                    }
+                }
+            }
         } catch (Exception e) {
             //必须当且仅当抛出ShopOperationException或者继承
             //ShopOperationException时，事务才会得以终止并回滚。
@@ -63,12 +64,12 @@ public class ShopServiceImpl implements ShopService {
             throw new ShopOperationException("addShop error" + e.getMessage());
         }
 
-//        return new ShopExecution(ShopStateEnum.CHECK,shop);
+        return new ShopExecution(ShopStateEnum.CHECK,shop);
     }
 
 
-    private void addShopImg(Shop shop, File shopImg) {
-        String path = ImageUtil.generateThumbnail(shopImg, PathUtil.getShopImagePath(shop.getShopId()));
+    private void addShopImg(Shop shop, InputStream shopImg,String fileName) {
+        String path = ImageUtil.generateThumbnail(shopImg, fileName,PathUtil.getShopImagePath(shop.getShopId()));
         shop.setShopImg(path);
     }
 }
