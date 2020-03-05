@@ -349,14 +349,15 @@
 
    1、Logback的主要模块
      
-       logback-access
-       logback-classic
-       logback-core  为以上两个模块提供了基础的服务
+       logback-access ：提供通过http访问日志的功能，第三方软件可以通过logback-access这个模块来访问到
+                       logback里面记录的日志     
+       logback-classic：log4j的一个改良的版本
+       logback-core   ：为以上两个模块提供了基础的服务
 
    2、Logback的主要标签
    
        logger：存放日志对象、定义日志类型、级别等
-       appender：指定日志输出的目的地
+       appender：指定日志输出的目的地-可以是控制台/文件/远程套接字服务器等
        layout：格式化日志信息的输出
 
    3、Logback的配置
