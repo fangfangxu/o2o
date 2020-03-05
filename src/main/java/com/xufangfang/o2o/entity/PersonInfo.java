@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 个人信息实体类
  * 
- * @author xiangze
+ * @author xufangfang
  *
  */
 public class PersonInfo {

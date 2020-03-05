@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * 店铺实体类
  * 
- * @author xiangze
+ * @author xufangfang
  *
  */
 public class Shop {

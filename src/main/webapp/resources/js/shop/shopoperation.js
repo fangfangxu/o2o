@@ -8,9 +8,9 @@ $(function() {
 	// 该标识符用来标明本次是添加还是编辑操作
 	var isEdit = shopId ? true : false;
 	// 用于店铺注册时候的店铺类别以及区域列表的初始化的URL
-	var initUrl = '/shopadmin/getshopinitinfo';
+	var initUrl = '/o2o/shopadmin/getshopinitinfo';
 	// 注册店铺的URL
-	var registerShopUrl = '/shopadmin/registershop';
+	var registerShopUrl = '/o2o/shopadmin/registershop';
 	// 编辑店铺前需要获取店铺信息，这里为获取当前店铺信息的URL
 	var shopInfoUrl = "/o2o/shopadmin/getshopbyid?shopId=" + shopId;
 	// 编辑店铺信息的URL

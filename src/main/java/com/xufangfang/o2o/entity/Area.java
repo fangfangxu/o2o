@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 /**
- * 区域实体类
+ * 区域实体类 xufangfang
  */
 public class Area {
     //ID
