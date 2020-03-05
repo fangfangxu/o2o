@@ -9,9 +9,11 @@
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
-    <!--配置SpringMVC-->
+
     <!--开启SpringMVC注解模式-->
     <mvc:annotation-driven/>
+
+
     <!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:default-servlet-handler />

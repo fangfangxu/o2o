@@ -320,14 +320,14 @@
       
  
       (1)
-      <context:annotation-config />仅能够在已经在已经注册过的bean上面起作用。@AutoWired等生效             
+      <context:annotation-config />仅能够在已经注册过的bean上面起作用。@AutoWired等生效             
       (2)
       <context:component-scan>做了<context:annotation-config>要做的事情，
       还额外支持@Component，@Repository，@Service，@Controller @RestController
       ,@ControllerAdvice, 和 @Configuration注解。
       <context:component-scan>扫描base-package指定的包，
       将标注了上述注解的类自动注册为Spring bean。 所以配置<context:component-scan>就不需要配置
-      <context:annotation- config/>
+      <context:annotation-config/>
       （3）mvc:annotation-driven 标签
        这个标签以mvc作为命名空间，毫无疑问它是用在Spring MVC中的配置。用于配置注释驱动的
        Spring MVC Controller编程模型
