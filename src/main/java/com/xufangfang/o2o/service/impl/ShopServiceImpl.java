@@ -1,6 +1,5 @@
 package com.xufangfang.o2o.service.impl;
 
-import com.xufangfang.o2o.dao.ShopDao;
 import com.xufangfang.o2o.dto.ShopExecution;
 import com.xufangfang.o2o.entity.Shop;
 import com.xufangfang.o2o.enums.ShopStateEnum;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 
