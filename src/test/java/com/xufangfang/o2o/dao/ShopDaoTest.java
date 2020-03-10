@@ -16,37 +16,31 @@ public class ShopDaoTest extends BaseTest {
     private ShopDao shopDao;
 
     @Test
-    @Ignore
     public void testInsertShop() {
         Shop shop = new Shop();
+
         PersonInfo owner = new PersonInfo();
         Area area = new Area();
         ShopCategory shopCategory = new ShopCategory();
+
         owner.setUserId(1L);
         area.setAreaId(2);
         shopCategory.setShopCategoryId(10L);
+
         shop.setOwner(owner);
         shop.setShopCategory(shopCategory);
         shop.setArea(area);
+
         shop.setShopName("测试的店铺");
-        shop.setShopDesc("testxu");
-        shop.setShopAddr("test");
-        shop.setPhone("test");
-        shop.setShopImg("test");
+        shop.setShopDesc("xuxuxuxux");
+        shop.setShopAddr("xuxuxuxux");
+        shop.setPhone("xuxuxuxux");
+        shop.setShopImg("xuxuxuxux");
         shop.setCreateTime(new Date());
         shop.setEnableStatus(1);
         shop.setAdvice("审核中");
-        int effectedNum=shopDao.insertShop(shop);
+        int effectedNum = shopDao.insertShop(shop);
+        System.out.println(effectedNum);
     }
-    @Test
-    public void testUpdateShop() {
-        Shop shop = new Shop();
-        shop.setShopId(41L);
-        shop.setShopDesc("测试描述");
-        shop.setShopAddr("测试地址");
-        shop.setLastEditTime(new Date());
-        int effectedNum=shopDao.updateShop(shop);
-    }
-
 
 }

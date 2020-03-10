@@ -1,5 +1,6 @@
 package com.xufangfang.o2o.service.impl;
 
+import com.xufangfang.o2o.dao.ShopDao;
 import com.xufangfang.o2o.dto.ShopExecution;
 import com.xufangfang.o2o.entity.Shop;
 import com.xufangfang.o2o.enums.ShopStateEnum;
@@ -47,7 +48,7 @@ public class ShopServiceImpl implements ShopService {
                     }
 
                     //更新店铺的图片地址
-                    effectedNum = shopDao.updateShop(shop);
+//                    effectedNum = shopDao.updateShop(shop);
                     if (effectedNum <= 0) {
                         throw new ShopOperationException("更新图片地址失败");
                     }

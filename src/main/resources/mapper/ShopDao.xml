@@ -12,11 +12,10 @@
      ,shop_desc,shop_addr,phone,shop_img,priority,create_time,last_edit_time
      ,enable_status,advice)
      values(
-     #{owner.userId},#{areaId},#{shopCategory.shopCategoryId},#{shopName},
+     #{owner.userId},#{area.areaId},#{shopCategory.shopCategoryId},#{shopName},
      #{shopDesc},#{shopAddr},#{phone},#{shopImg},#{priority},#{createTime},
     #{lastEditTime},#{enableStatus},#{advice}
  )
-
     </insert>
 
 </mapper>
