@@ -501,7 +501,64 @@
 
 (1)Thumbnailator图片处理和封装Util
 
- 
+      <!-- 图片处理 -->
+         <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+         <dependency>
+             <groupId>net.coobird</groupId>
+             <artifactId>thumbnailator</artifactId>
+             <version>0.4.8</version>
+         </dependency>
+
+ImgUtil----->test1：图片加水印练习-1
+
+           public static void main(String[] args) throws IOException {
+               //获取ClassPath的绝对值路径
+               String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+               Thumbnails.of(new File("E:\\资料\\1580800005(1).png"))
+                       .size(200, 200).watermark(Positions.BOTTOM_RIGHT,
+                       ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f).outputQuality(0.8f)
+                       .toFile("E:\\资料\\xufangfang.png");
+           }         
+        
+PathUtil----->
+
+           /**
+            * 路径处理工具类
+            * (1)根据执行环境的不同，提供不同的根路径
+            */
+           public class PathUtil {
+               //System.getProperty获取系统的属性
+               //file.seperator获取系统文件的分隔符
+               private static String seperator = System.getProperty("file.seperator");
+           
+               public static String getImgBasePath() {
+                   //System.getProperty获取系统的属性
+                   //os.name获取系统的名称
+                   String os = System.getProperty("os.name");
+                   String basePath = "";
+                   if (os.toLowerCase().startsWith("win")) {
+                       basePath = "E:/资料/img/";
+                   } else {
+                       basePath = "/home/xiangze/image/";
+                   }
+                   //路径中的分隔符对于Linux是反斜杠、对于windows是斜杠，需要对分隔符进行处理
+                   basePath = basePath.replace("/", seperator);
+                   return basePath;
+               }
+           
+               /**
+                * 获取店铺图片存储路径
+                * 业务需要：将店铺图片分别存储在各自店铺的路径下
+                *
+                * @return
+                */
+               public static String getShopImagePath(long shopId) {
+                   String imagePath = "/upload/item/shop/" + shopId + "/";
+                   return imagePath.replace("/", seperator);
+               }
+               
+           }        
+         
  
  (4)Sui Mobile（自适应网页设计框架）： https://sui.ctolog.com/
  

@@ -66,7 +66,7 @@ public class ShopServiceImpl implements ShopService {
     }
 
     private void addShopImg(Shop shop, InputStream shopImg,String fileName) {
-        String path = ImageUtil.generateThumbnail(shopImg, fileName,PathUtil.getShopImagePath(shop.getShopId()));
-        shop.setShopImg(path);
+//        String path = ImageUtil.generateThumbnail(shopImg, fileName,PathUtil.getShopImagePath(shop.getShopId()));
+//        shop.setShopImg(path);
     }
 }
