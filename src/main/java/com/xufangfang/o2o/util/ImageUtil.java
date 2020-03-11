@@ -16,6 +16,33 @@ import java.util.Random;
 
 
 public class ImageUtil {
+   private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+
+     public static String generateThumbnail(CommonsMultipartFile thumbnail,String targetAddr){
+       //获取文件随机名
+       String realFileName=getRandomFileName();
+       //获取文件扩展名
+       String extension=getFileExtension(thumbnail);
+       makeDirPath(targetAddr);
+       String relativeAddr=targetAddr+realFileName+extension;
+       File dest=new File(PathUtil.getImgBasePath()+relativeAddr);
+       try{
+           Thumbnails.of(thumbnail.getInputStream()).size(200,200).watermark(Positions.BOTTOM_RIGHT,
+                   ImageIO.read(new File(basePath+"/watermark.jpg")),0.25f).outputQuality(0.8f)
+           .toFile(dest);
+
+       }catch (IOException e){
+           e.printStackTrace();
+       }
+    }
+
+    /**
+     * 生成随机文件名
+     * @return
+     */
+   private static String getRandomFileName(){
+         return null;
+   }
 
 
     public static void main(String[] args) throws IOException {
@@ -24,7 +51,6 @@ public class ImageUtil {
          * 2、输出的文件是什么
          */
         //获取ClassPath的绝对值路径
-        String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         Thumbnails.of(new File("E:\\资料\\1580800005(1).png"))
                 .size(200, 200).watermark(Positions.BOTTOM_RIGHT,
                 ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f).outputQuality(0.8f)
