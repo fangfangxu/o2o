@@ -657,7 +657,8 @@ PathUtil----->
                }
                
            }     
-         
+
+(2)程序当且仅当抛出RuntimeException或者继承RuntimeException的时候，事务才会得以终止并回滚。         
  
  (4)Sui Mobile（自适应网页设计框架）： https://sui.ctolog.com/
  

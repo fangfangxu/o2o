@@ -15,7 +15,6 @@ public class ShopExecution {
     private int count;
     //操作的shop（增删改店铺的时候用到）
     private Shop shop;
-
     //shop列表
     private List<Shop> shopList;
 
