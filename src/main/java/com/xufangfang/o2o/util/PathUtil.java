@@ -7,7 +7,7 @@ package com.xufangfang.o2o.util;
 public class PathUtil {
     //System.getProperty获取系统的属性
     //file.seperator获取系统文件的分隔符
-    private static String seperator = System.getProperty("file.seperator");
+    private static String seperator = System.getProperty("file.separator");
 
     public static String getImgBasePath() {
         //System.getProperty获取系统的属性
@@ -32,7 +32,8 @@ public class PathUtil {
      */
     public static String getShopImagePath(long shopId) {
         String imagePath = "/upload/item/shop/" + shopId + "/";
-        return imagePath.replace("/", seperator);
+        getImgBasePath();
+        return imagePath.replace("/", "/");
     }
 
 }

@@ -35,18 +35,18 @@ public class ShopServiceImpl implements ShopService {
             //添加店铺信息
             int effectedNum = shopDao.insertShop(shop);
             if (effectedNum <= 0) {
-                throw new RuntimeException("店铺创建失败");
+                throw new ShopOperationException("店铺创建失败");
             } else {
                 if (shopImg != null) {
                     //存储图片
                     try {
                         addShopImg(shop, shopImg);
                     } catch (Exception e) {
-                        throw new RuntimeException("addShopImg error:" + e.getMessage());
+                        throw new ShopOperationException("addShopImg error:" + e.getMessage());
                     }
                     effectedNum = shopDao.updateShop(shop);
                     if (effectedNum <= 0) {
-                        throw new RuntimeException("更新图片地址失败");
+                        throw new ShopOperationException("更新图片地址失败");
                     }
 
 
@@ -56,17 +56,19 @@ public class ShopServiceImpl implements ShopService {
 
 
         } catch (Exception e) {
-            throw new RuntimeException("addShop error：" + e.getMessage());
+            throw new ShopOperationException("addShop error：" + e.getMessage());
         }
-        return null;
+        return new ShopExecution(ShopStateEnum.SUCCESS,shop);
     }
 
-    
-    private void addShopImg(Shop shop,File shopImg){
 
-
+    private String addShopImg(Shop shop, File shopImg) {
+        //相对值路径
+        String dest = PathUtil.getShopImagePath(shop.getShopId());
+        String shopImgAddr = ImageUtil.generateThumbnail(shopImg, dest);
+        shop.setShopImg(shopImgAddr);
+        return shopImgAddr;
     }
-
 
 
 }

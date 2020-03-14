@@ -658,7 +658,15 @@ PathUtil----->
                
            }     
 
-(2)程序当且仅当抛出RuntimeException或者继承RuntimeException的时候，事务才会得以终止并回滚。         
+(2)程序当且仅当抛出RuntimeException或者继承RuntimeException的时候，事务才会得以终止并回滚。      
+
+(3)负责将实体类转换成json、或者将json转换成实体类
+        <!-- json解析 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.8.7</version>
+        </dependency>   
  
  (4)Sui Mobile（自适应网页设计框架）： https://sui.ctolog.com/
  
