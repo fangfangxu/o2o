@@ -35,54 +35,89 @@ public class ShopManagementController {
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
-        Map<String,Object> modelMap=new HashMap<>();
+        Map<String, Object> modelMap = new HashMap<>();
         //1、接收并转化响应的参数，包括店铺以及图片信息
-       String shopStr=HttpServletRequestUtil.getString(request,"shopStr");
-       ObjectMapper mapper=new ObjectMapper();
-       Shop shop=null;
-       try{
-           shop=mapper.readValue(shopStr,Shop.class);
-       }catch (Exception e){
-           modelMap.put("success",false);
-           modelMap.put("errMsg",e.getMessage());
-           return modelMap;
-       }
-       CommonsMultipartFile shopImg=null;
-       CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver(
-               request.getSession().getServletContext());
-       if(commonsMultipartResolver.isMultipart(request)){
-           MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest)request;
-           shopImg=(CommonsMultipartFile)multipartHttpServletRequest.getFile("shopImg");
+        String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+        ObjectMapper mapper = new ObjectMapper();
+        Shop shop = null;
+        try {
+            shop = mapper.readValue(shopStr, Shop.class);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+            return modelMap;
+        }
+        CommonsMultipartFile shopImg = null;
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        if (commonsMultipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+            shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
 
-       }else{
-           modelMap.put("success",false);
-           modelMap.put("errMsg","上传图片不能为空");
-           return modelMap;
-       }
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "上传图片不能为空");
+            return modelMap;
+        }
         //2、注册店铺
-        if(shop !=null && shopImg !=null){
-            PersonInfo owner=new PersonInfo();
+        if (shop != null && shopImg != null) {
+            PersonInfo owner = new PersonInfo();
             owner.setUserId(1L);
             shop.setOwner(owner);
-            ShopExecution se=shopService.addShop(shop,shopImg);
-
-        }else{
-            modelMap.put("success",false);
-            modelMap.put("errMsg","请输入店铺信息");
+            File shopImgFile = new File(PathUtil.getImgBasePath() + ImageUtil.getRandomFileName());
+            try {
+                shopImgFile.createNewFile();
+            } catch (IOException e) {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", e.getMessage());
+                return modelMap;
+            }
+            try {
+                inputStreamToFile(shopImg.getInputStream(), shopImgFile);
+            } catch (IOException e) {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", e.getMessage());
+                return modelMap;
+            }
+            ShopExecution se = shopService.addShop(shop, shopImgFile);
+            if(se.getState()==ShopStateEnum.CHECK.getState()){
+                modelMap.put("success", true);
+            }else{
+                modelMap.put("success", false);
+                modelMap.put("errMsg", se.getStateInfo());
+            }
             return modelMap;
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "请输入店铺信息");
+            return modelMap;
+        }
+    }
+
+    private static void inputStreamToFile(InputStream ins, File file) {
+        FileOutputStream os = null;
+        try {
+            os = new FileOutputStream(file);
+            int bytesRead = 0;
+            byte[] buffer = new byte[1024];
+            while ((bytesRead = ins.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("调用inputStreamToFile产生异常：" + e.getMessage());
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+                if (ins != null) {
+                    ins.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("调用inputStreamToFile关闭产生异常：" + e.getMessage());
+            }
         }
 
 
-
-
-        //3、返回结果
-
-        return null;
-    }
-
-    private static void inputStreamToFile(InputStream ins,File file){
-
-
-        
     }
 }
