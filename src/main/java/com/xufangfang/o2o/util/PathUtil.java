@@ -32,7 +32,7 @@ public class PathUtil {
      */
     public static String getShopImagePath(long shopId) {
         String imagePath = "/upload/item/shop/" + shopId + "/";
-        getImgBasePath();
+//        getImgBasePath();
         return imagePath.replace("/", "/");
     }
 

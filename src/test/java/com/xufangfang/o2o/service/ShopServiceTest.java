@@ -32,7 +32,7 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setShopCategory(shopCategory);
         shop.setArea(area);
-        shop.setShopName("测试的店铺55666");
+        shop.setShopName("测试的店铺202003156");
         shop.setShopDesc("testxu331");
         shop.setShopAddr("test1133");
         shop.setPhone("test133");
@@ -40,13 +40,13 @@ public class ShopServiceTest extends BaseTest {
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         shop.setAdvice("审核中");
         File shopImg = new File("E:/image/6cfa6944-6ba4-4f79-9813-4f0621d50838.JPG");
-//        InputStream ins=null;
-//        try {
-//             ins=new FileInputStream(shopImg);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        ShopExecution se= shopService.addShop(shop,shopImg);
+        InputStream ins=null;
+        try {
+             ins=new FileInputStream(shopImg);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ShopExecution se= shopService.addShop(shop,ins,shopImg.getName());
         System.out.println(se.getState());
     }
 }

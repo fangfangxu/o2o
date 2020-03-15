@@ -23,7 +23,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, File shopImg) {
+    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
         if (shop == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         }
@@ -37,10 +37,10 @@ public class ShopServiceImpl implements ShopService {
             if (effectedNum <= 0) {
                 throw new ShopOperationException("店铺创建失败");
             } else {
-                if (shopImg != null) {
+                if (shopImgInputStream != null) {
                     //存储图片
                     try {
-                        addShopImg(shop, shopImg);
+                        addShopImg(shop, shopImgInputStream,fileName);
                     } catch (Exception e) {
                         throw new ShopOperationException("addShopImg error:" + e.getMessage());
                     }
@@ -62,10 +62,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
 
-    private String addShopImg(Shop shop, File shopImg) {
+    private String addShopImg(Shop shop, InputStream shopImgInputStream,String fileName) {
         //相对值路径
         String dest = PathUtil.getShopImagePath(shop.getShopId());
-        String shopImgAddr = ImageUtil.generateThumbnail(shopImg, dest);
+        //处理缩略图、并返回新生成图片的相对值路径
+        String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream, fileName,dest);
         shop.setShopImg(shopImgAddr);
         return shopImgAddr;
     }
