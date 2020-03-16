@@ -1,6 +1,6 @@
 $(function () {
-    var initUrl = '/shop/getshopinitinfo';
-    var registerShopUrl = '/shop/shopadmin/registerShop';
+    var initUrl = '/shopadmin/getshopinitinfo';
+    var registerShopUrl = '/shopadmin/registerShop';
     alert(initUrl);
     getShopInitInfo();
     function getShopInitInfo() {
