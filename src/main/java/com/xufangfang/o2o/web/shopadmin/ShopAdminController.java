@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ShopAdminController {
     @RequestMapping("/shopoperation")
     public String shopOperation() {
-        return "shop/index";
+        return "shop/shopoperation";
     }
 }
