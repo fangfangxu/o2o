@@ -679,8 +679,15 @@ PathUtil----->
  3、自适应网页设计框架
  
  
- 
- 
+(5)Kaptcha实现验证码
+  
+     <!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+     <dependency>
+         <groupId>com.github.penggle</groupId>
+         <artifactId>kaptcha</artifactId>
+         <version>2.3.2</version>
+     </dependency>
+
     
  
  
