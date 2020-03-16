@@ -4,7 +4,7 @@ $(function () {
     alert(initUrl);
     getShopInitInfo();
     function getShopInitInfo() {
-        $getJSON(initUrl, function (data) {
+        $.getJSON(initUrl, function (data) {
             if (data.success) {
                 var tempHtml = '';
                 var tempAreaHtml = '';
