@@ -1,7 +1,7 @@
 $(function () {
     var initUrl = '/shopadmin/getshopinitinfo';
     var registerShopUrl = '/shopadmin/registerShop';
-    alert(initUrl);
+    // alert(initUrl);
     getShopInitInfo();
     function getShopInitInfo() {
         $.getJSON(initUrl, function (data) {
@@ -39,6 +39,16 @@ $(function () {
         var formData = new FormData();
         formData.append('shopImg', shopImg);
         formData.append('shopStr', JSON.stringify(shop));
+
+        var verifyCodeActual=$('#j_captcha').val();
+        if(!verifyCodeActual){
+            $toast('请输入验证码！');
+            return;
+        }
+          formData.append('verifyCodeActual', verifyCodeActual);
+
+
+
         $.ajax(
             {
                 url: registerShopUrl,
