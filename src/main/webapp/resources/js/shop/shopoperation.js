@@ -25,46 +25,46 @@ $(function () {
             shop.phone = $('shop-phone').val();
             shop.shopDesc = $('shop-desc').val();
             shop.shopCategory = {
-                shopCategoryId: $('#shop-category').find('option').not(function () {
+                shopCategoryId:$('#shop-category').find('option').not(function () {
                     return !this.selected;
-                }).data('id')
+                }).data.id
             };
             shop.area = {
                 areaId: $('#area').find('option').not(function () {
                     return !this.selected;
-                }).data('id')
+                }).data.id
             }
-        });
-        var shopImg = $('#shop-img')[0].files[0];
-        var formData = new FormData();
-        formData.append('shopImg', shopImg);
-        formData.append('shopStr', JSON.stringify(shop));
+            var shopImg = $('#shop-img')[0].files[0];
+            var formData = new FormData();
+            formData.append('shopImg', shopImg);
+            formData.append('shopStr', JSON.stringify(shop));
 
-        var verifyCodeActual=$('#j_captcha').val();
-        if(!verifyCodeActual){
-            $toast('请输入验证码！');
-            return;
-        }
-          formData.append('verifyCodeActual', verifyCodeActual);
-
-
-
-        $.ajax(
-            {
-                url: registerShopUrl,
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success: function (data) {
-                    if (data.success) {
-                        $.toast('提交成功!');
-                    } else {
-                        $.toast('提交失败!'+data.errMsg);
+            var verifyCodeActual=$('#j_captcha').val();
+            if(!verifyCodeActual){
+                $.toast('请输入验证码！');
+                return;
+            }
+            formData.append('verifyCodeActual', verifyCodeActual);
+            $('#captcha_img').click();
+            $.ajax(
+                {
+                    url: registerShopUrl,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    success: function (data) {
+                        if (data.success) {
+                            $.toast('提交成功!');
+                        } else {
+                            $.toast('提交失败!'+data.errMsg);
+                        }
+                        $('#captcha_img').click();
                     }
                 }
-            }
-        );
+            );
+        });
+
     }
 })
