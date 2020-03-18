@@ -40,13 +40,13 @@ public class ShopServiceTest extends BaseTest {
         shop.setEnableStatus(ShopStateEnum.CHECK.getState());
         shop.setAdvice("审核中");
         File shopImg = new File("E:/image/6cfa6944-6ba4-4f79-9813-4f0621d50838.JPG");
-        InputStream ins=null;
+        InputStream ins = null;
         try {
-             ins=new FileInputStream(shopImg);
+            ins = new FileInputStream(shopImg);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ShopExecution se= shopService.addShop(shop,ins,shopImg.getName());
+        ShopExecution se = shopService.addShop(shop, ins, shopImg.getName());
         System.out.println(se.getState());
     }
 }

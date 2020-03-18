@@ -49,14 +49,14 @@ public class ShopManagementController {
         List<ShopCategory> shopCategoryList = new ArrayList<>();
         List<Area> areaList = new ArrayList<>();
         try {
-            shopCategoryList=shopCategaryService.getShopCategoryList(new ShopCategory());
-            areaList=areaService.getAreaList();
-            modelMap.put("shopCategoryList",shopCategoryList);
-            modelMap.put("areaList",areaList);
-            modelMap.put("success",true);
+            shopCategoryList = shopCategaryService.getShopCategoryList(new ShopCategory());
+            areaList = areaService.getAreaList();
+            modelMap.put("shopCategoryList", shopCategoryList);
+            modelMap.put("areaList", areaList);
+            modelMap.put("success", true);
         } catch (Exception e) {
-            modelMap.put("success",false);
-            modelMap.put("errMsg",e.getMessage());
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
         }
         return modelMap;
     }

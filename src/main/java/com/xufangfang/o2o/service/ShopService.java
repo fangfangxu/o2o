@@ -9,10 +9,11 @@ import java.io.InputStream;
 public interface ShopService {
     /**
      * 添加店铺
+     *
      * @param shop
      * @param shopImgInputStream
      * @param fileName
      * @return
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream,String fileName) ;
+    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName);
 }

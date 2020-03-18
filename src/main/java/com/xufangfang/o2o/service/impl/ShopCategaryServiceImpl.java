@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service("shopCategaryService")
 public class ShopCategaryServiceImpl implements ShopCategaryService {
-  @Autowired
-  private ShopCategoryDao shopCategoryDao;
+    @Autowired
+    private ShopCategoryDao shopCategoryDao;
 
     @Override
     public List<ShopCategory> getShopCategoryList(ShopCategory shopCategoryCondition) {

@@ -49,7 +49,7 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(InputStream thumbnailInputStream,String fileName, String targetAddr) {
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr) {
         //获取文件随机名
         String realFileName = getRandomFileName();
         //获取文件扩展名

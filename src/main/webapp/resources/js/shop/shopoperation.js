@@ -3,6 +3,7 @@ $(function () {
     var registerShopUrl = '/shopadmin/registershop';
     // alert(initUrl);
     getShopInitInfo();
+
     function getShopInitInfo() {
         $.getJSON(initUrl, function (data) {
             if (data.success) {
@@ -25,7 +26,7 @@ $(function () {
             shop.phone = $('shop-phone').val();
             shop.shopDesc = $('shop-desc').val();
             shop.shopCategory = {
-                shopCategoryId:$('#shop-category').find('option').not(function () {
+                shopCategoryId: $('#shop-category').find('option').not(function () {
                     return !this.selected;
                 }).data.id
             };
@@ -39,8 +40,8 @@ $(function () {
             formData.append('shopImg', shopImg);
             formData.append('shopStr', JSON.stringify(shop));
 
-            var verifyCodeActual=$('#j_captcha').val();
-            if(!verifyCodeActual){
+            var verifyCodeActual = $('#j_captcha').val();
+            if (!verifyCodeActual) {
                 $.toast('请输入验证码！');
                 return;
             }
@@ -58,7 +59,7 @@ $(function () {
                         if (data.success) {
                             $.toast('提交成功!');
                         } else {
-                            $.toast('提交失败!'+data.errMsg);
+                            $.toast('提交失败!' + data.errMsg);
                         }
                         $('#captcha_img').click();
                     }

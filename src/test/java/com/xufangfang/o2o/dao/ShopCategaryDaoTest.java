@@ -11,9 +11,10 @@ import java.util.List;
 public class ShopCategaryDaoTest extends BaseTest {
     @Autowired
     private ShopCategoryDao shopCategoryDao;
+
     @Test
-    public void testQueryArea(){
-        List<ShopCategory> areaList=shopCategoryDao.queryShopCategory(new ShopCategory());
+    public void testQueryArea() {
+        List<ShopCategory> areaList = shopCategoryDao.queryShopCategory(new ShopCategory());
         System.out.print(areaList.size());
     }
 }

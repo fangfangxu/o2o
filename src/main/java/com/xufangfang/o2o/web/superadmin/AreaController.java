@@ -18,17 +18,17 @@ import java.util.Map;
 @RequestMapping("/superadmin")
 public class AreaController {
 
-    Logger logger=LoggerFactory.getLogger(AreaController.class);
+    Logger logger = LoggerFactory.getLogger(AreaController.class);
 
     @Autowired
     private AreaService areaService;
 
 
-    @RequestMapping(value = "/listarea",method = RequestMethod.GET)
+    @RequestMapping(value = "/listarea", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> listArea() {
         logger.info("=======start========");
-        long startTime=System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         Map<String, Object> modelMap = new HashMap<>();
         try {
             List<Area> areas = areaService.getAreaList();
@@ -39,8 +39,8 @@ public class AreaController {
             modelMap.put("errMsg", e.toString());
         }
         logger.error("test error!");
-        long endTime=System.currentTimeMillis();
-        logger.debug("costTime[{}ms]",(endTime-startTime));
+        long endTime = System.currentTimeMillis();
+        logger.debug("costTime[{}ms]", (endTime - startTime));
         logger.info("=======end========");
         return modelMap;
 

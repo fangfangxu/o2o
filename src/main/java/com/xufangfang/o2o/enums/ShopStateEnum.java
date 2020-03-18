@@ -6,8 +6,8 @@ public enum ShopStateEnum {
     SUCCESS(1, "操作成功"),
     PASS(2, "通过认证"),
     INNER_ERROR(-1001, "内部系统错误"),
-    NULL_SHOPID(-1002,"ShopId为空"),
-    NULL_SHOP(-1003,"shop信息为空");
+    NULL_SHOPID(-1002, "ShopId为空"),
+    NULL_SHOP(-1003, "shop信息为空");
 
     private String stateInfo;
     private int state;
@@ -19,12 +19,13 @@ public enum ShopStateEnum {
 
     /**
      * 依据传入的state返回响应的enum值
+     *
      * @param state
      * @return
      */
-    public static ShopStateEnum stateOf(int state){
-        for(ShopStateEnum shopStateEnum:values()){
-            if(shopStateEnum.getState()==state){
+    public static ShopStateEnum stateOf(int state) {
+        for (ShopStateEnum shopStateEnum : values()) {
+            if (shopStateEnum.getState() == state) {
                 return shopStateEnum;
             }
         }

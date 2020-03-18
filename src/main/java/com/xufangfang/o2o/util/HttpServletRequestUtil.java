@@ -41,12 +41,12 @@ public class HttpServletRequestUtil {
 
     public static String getString(HttpServletRequest request, String key) {
         try {
-            String result=request.getParameter(key);
-            if(result!=null){
-                result=result.trim();
+            String result = request.getParameter(key);
+            if (result != null) {
+                result = result.trim();
             }
-            if("".equals(result)){
-                result=null;
+            if ("".equals(result)) {
+                result = null;
             }
 
             return result;
