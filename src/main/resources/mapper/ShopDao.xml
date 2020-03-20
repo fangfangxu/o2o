@@ -4,6 +4,45 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xufangfang.o2o.dao.ShopDao">
+    <resultMap type="Shop" id="shopMap">
+        <id column="shop_id" property="shopId" javaType="java.lang.Long"/>
+        <result column="shop_name" property="shopName" javaType="java.lang.String"/>
+        <result column="shop_desc" property="shopDesc" javaType="java.lang.String"/>
+        <result column="shop_addr" property="shopAddr" javaType="java.lang.String"/>
+        <result column="phone" property="phone" javaType="java.lang.String"/>
+        <result column="shop_img" property="shopImg" javaType="java.lang.String"/>
+        <result column="priority" property="priority" javaType="java.lang.Integer"/>
+        <result column="create_time" property="createTime" javaType="java.util.Date"/>
+        <result column="last_edit_time" property="lastEditTime" javaType="java.util.Date"/>
+        <result column="enable_status" property="enableStatus" javaType="java.lang.Integer"/>
+        <result column="advice" property="advice" javaType="java.lang.String"/>
+        <association property="area" column="area_id" javaType="com.xufangfang.o2o.entity.Area">
+            <id column="area_id" property="areaId"/>
+            <result column="area_name" property="areaName" javaType="java.lang.String"/>
+        </association>
+
+        <association property="shopCategory" column="shop_category_id"
+                     javaType="com.xufangfang.o2o.entity.ShopCategory">
+            <id column="shop_category_id" property="shopCategoryId"/>
+            <result column="shop_category_name" property="shopCategoryName" javaType="java.lang.String"/>
+        </association>
+
+        <association property="owner" column="user_id" javaType="com.xufangfang.o2o.entity.PersonInfo">
+            <id column="user_id" property="userId"/>
+            <result column="name" property="name" javaType="java.lang.String"/>
+        </association>
+    </resultMap>
+
+    <select id="queryByShopId" parameterType="java.lang.Long" resultMap="shopMap">
+    select s.shop_id,
+    s.shop_name,s.shop_desc,s.shop_addr,s.phone,s.shop_img,s.priority,s.create_time,
+    s.last_edit_time,s.enable_status,s.advice,a.area_id,a.area_name,sc.shop_category_id,
+    sc.shop_category_name
+    from tb_shop s,tb_area a,tb_shop_category sc
+     where s.area_id=a.area_id and s.shop_category_id=sc.shop_category_id
+     and s.shop_id=#{shopId}
+    </select>
+
     <!--useGeneratedKeys="true"：获取数据库自增主键值，将主键值传入到实体类参数中Shop-->
     <insert id="insertShop" useGeneratedKeys="true" parameterType="Shop" keyColumn="shop_id" keyProperty="shopId">
         insert into
@@ -17,6 +56,7 @@
         #{lastEditTime},#{enableStatus},#{advice}
         )
     </insert>
+
 
     <update id="updateShop" parameterType="Shop">
         update tb_shop
