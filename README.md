@@ -746,13 +746,48 @@ PathUtil----->
          </servlet-mapping>
          
          
-      html:
-         
+     html:
+ 
+     <!--验证码 kaptcha-->
+                     <li class="align-top">
+                         <div class="item-content">
+                             <div class="item-inner">
+                                 <div class="item-title label">验证码</div>
+                                 <input type="text" id="j_captcha" placeholder="验证码">
+                                 <div class="item-input">
+                                     <img id="captcha_img" alt="点击更换" title="点击更换"
+                                          onclick="changeVerifyCode(this)" src="../Kaptcha"></img>
+                                 </div>
+                             </div>
+                         </div>
+                     </li>
  
  
- 
- 
- 
+     js:
+     function changeVerifyCode(img) {
+         // img.src="../Kaptcha?"+Math.floor(Math.random()*100)  ;
+         img.src = "../Kaptcha?";
+     
+     }
+     
+      if (!verifyCodeActual) {
+                     $.toast('请输入验证码！');
+                     return;
+                 }
+                 formData.append('verifyCodeActual', verifyCodeActual);
+     
+     java：
+         public static boolean checkVerifyCode(HttpServletRequest request){
+             String verifyCodeExpected=(String)request.getSession().getAttribute(
+                     Constants.KAPTCHA_SESSION_KEY
+             );
+             String verifyCodeActual=HttpServletRequestUtil.getString(request,"verifyCodeActual");
+             if(verifyCodeActual==null || !verifyCodeActual.equals(verifyCodeExpected)){
+                 return false;
+             }
+             return true;
+     
+         }
  
  
  
