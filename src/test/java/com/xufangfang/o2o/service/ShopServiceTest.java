@@ -52,7 +52,16 @@ public class ShopServiceTest extends BaseTest {
 
     @Test
     public void testModifiedShop(){
-        Shop shop=shopService.getByShopId(87);
+        Shop shop=shopService.getByShopId(95);
+        shop.setShopName("修改后的图片");
+        File shopImg = new File("E:/照片/Camera/11.jpg");
+        InputStream ins = null;
+        try {
+            ins = new FileInputStream(shopImg);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        shopService.modifyShop(shop,ins,"dabai.JPG");
 
 
     }
