@@ -11,6 +11,7 @@ import com.xufangfang.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -20,6 +21,43 @@ import java.util.Date;
 public class ShopServiceImpl implements ShopService {
     @Autowired
     private ShopDao shopDao;
+
+    @Override
+    public Shop getByShopId(long shopId) {
+        return shopDao.queryByShopId(shopId);
+    }
+
+    @Override
+    public ShopExecution modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+        if(shop==null || shop.getShopId()==null){
+            return new ShopExecution(ShopStateEnum.NULL_SHOP);
+        }else{
+            //1、判断是否需要处理图片：若更新图片则删除旧的图片信息
+            try {
+                if (shopImgInputStream != null && !StringUtils.isEmpty(fileName)) {
+                    //先获取Shop之前的图片地址
+                    Shop tempShop = shopDao.queryByShopId(shop.getShopId());
+                    if (tempShop.getShopImg() != null) {
+                        ImageUtil.deleteFileOrPath(tempShop.getShopImg());
+                    }
+                    addShopImg(shop, shopImgInputStream, fileName);
+                }
+
+                //2、更新店铺信息
+                shop.setLastEditTime(new Date());
+                int effectedNum = shopDao.updateShop(shop);
+                if (effectedNum <= 0) {
+                    return new ShopExecution(ShopStateEnum.INNER_ERROR);
+                } else {
+                    shop = shopDao.queryByShopId(shop.getShopId());
+                    return new ShopExecution(ShopStateEnum.SUCCESS, shop);
+                }
+            }catch (Exception e){
+                throw new ShopOperationException("MODIFYsHOP ERROR:"+e.getMessage());
+            }
+        }
+
+    }
 
     @Override
     @Transactional

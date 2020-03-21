@@ -119,4 +119,24 @@ public class ImageUtil {
                 ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f).outputQuality(0.8f)
                 .toFile("E:\\资料\\xufangfang.png");
     }
+
+    /**
+     * storePath是文件的路径还是目录的路径
+     * 若文件路径：删除该文件
+     * 若目录路径：删除该目录下的所有文件
+     */
+    public static void deleteFileOrPath(String storePath) {
+        File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+        if (fileOrPath.exists()) {
+            if (fileOrPath.isDirectory()) {
+                //是一个目录：那么将目录下的文件均删除
+                File files[] = fileOrPath.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    files[i].delete();
+                }
+                fileOrPath.delete();
+            }
+        }
+
+    }
 }

@@ -49,4 +49,11 @@ public class ShopServiceTest extends BaseTest {
         ShopExecution se = shopService.addShop(shop, ins, shopImg.getName());
         System.out.println(se.getState());
     }
+
+    @Test
+    public void testModifiedShop(){
+        Shop shop=shopService.getByShopId(87);
+
+
+    }
 }
