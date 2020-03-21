@@ -41,13 +41,13 @@ $(function () {
             formData.append('shopStr', JSON.stringify(shop));
 
             var verifyCodeActual = $('#j_captcha').val();
-            alert(verifyCodeActual);
+            // alert(verifyCodeActual);
             if (!verifyCodeActual) {
                 $.toast('请输入验证码！');
                 return;
             }
             formData.append('verifyCodeActual', verifyCodeActual);
-            $('#captcha_img').click();
+            // $('#captcha_img').click();
             $.ajax(
                 {
                     url: registerShopUrl,
