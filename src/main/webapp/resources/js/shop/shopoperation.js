@@ -6,7 +6,12 @@ $(function () {
     var shopInfoUrl = '/shopadmin/getshopbyid?shopId=' + shopId;
     var editShopUrl = '/shopadmin/modifyShop';
     // alert(initUrl);
-    getShopInitInfo();
+
+    if (!isEdit) {
+        getShopInitInfo();
+    } else {
+        getShopInfo(shopId);
+    }
 
     function getShopInfo(shopId) {
         $.getJSON(shopInfoUrl, function (data) {
@@ -17,18 +22,18 @@ $(function () {
                 $('#shop-address').val(shop.shopAddr);
                 $('#shop-phone').val(shop.phone);
                 $('#shop-desc').val(shop.shopDesc);
-                var shopCategory='<option data-id"'
-                +shop.shopCategory.shopCategoryId+'" selected>'
-                +shop.shopCategory.shopCategoryName+'</option>';
-               var tempAreaHtml='';
-               data.areaList.map(function (item,index) {
-                   tempAreaHtml+='<option data-id="'+item.areaId+'">'
-                   +item.areaName+'</option>';
-               });
+                var shopCategory = '<option data-id"'
+                    + shop.shopCategory.shopCategoryId + '" selected>'
+                    + shop.shopCategory.shopCategoryName + '</option>';
+                var tempAreaHtml = '';
+                data.areaList.map(function (item, index) {
+                    tempAreaHtml += '<option data-id="' + item.areaId + '">'
+                        + item.areaName + '</option>';
+                });
                 $('#shop-category').html(shopCategory);
-                $('#shop-category').attr('disabled','disabled');
+                $('#shop-category').attr('disabled', 'disabled');
                 $('#area').html(tempAreaHtml);
-                $('#area').attr('data-id',shop.areaId);
+                $('#area').attr('data-id', shop.areaId);
             }
         });
     }
@@ -80,7 +85,7 @@ $(function () {
             // $('#captcha_img').click();
             $.ajax(
                 {
-                    url: registerShopUrl,
+                    url: (isEdit ? editShopUrl : registerShopUrl),
                     type: 'POST',
                     data: formData,
                     contentType: false,
