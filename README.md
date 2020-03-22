@@ -790,10 +790,24 @@ PathUtil----->
          }
  
  
-（6）  
-  
- 
- 
+（6）在web开发过程中，服务器可以为每个用户浏览器创建一个session对象，一个浏览器独占一个session
+    
+   对象，因此在保存用户数据时，服务器层可以把用户信息写到浏览器独占的session中，当用户使用浏览器
+   
+   访问服务器程序时，服务器可以从用户的session中取出用户的数据为用户服务，服务器创建session出来后，
+    
+   会把session的一个ID号以Cookie的形式回写给客户机，这样只要客户端的浏览器不关再去访问服务器的时候
+   
+   都会带着Session的ID号过去，服务器发现客户端带着Session的ID号过来，就会使用内容中与之对应的session
+   
+   为之服务。Session是有过期时间的，Tomcat默认的Session的过期时间为30分钟。   
+    
+    获取登陆保存的Session信息 ：key是user
+    
+    从session取：
+    request.getSession().getAttribute("user");
+    向session放：
+    request.getSession().setAttribute("shopList",shopList);
  
  
  
