@@ -28,7 +28,7 @@ $(function () {
                 $('#shop-category').html(shopCategory);
                 $('#shop-category').attr('disabled','disabled');
                 $('#area').html(tempAreaHtml);
-                $('#area').attr('disabled','disabled');
+                $('#area').attr('data-id',shop.areaId);
             }
         });
     }
