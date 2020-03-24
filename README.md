@@ -809,6 +809,9 @@ PathUtil----->
     向session放：
     request.getSession().setAttribute("shopList",shopList);
  
+(7)Mybatis-mapper中的模糊查询：
+
+    s.shop_name like '%${shopCondition.shopName}%' 
  
  
  
