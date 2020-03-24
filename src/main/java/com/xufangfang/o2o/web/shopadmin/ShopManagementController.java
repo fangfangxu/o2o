@@ -42,7 +42,11 @@ public class ShopManagementController {
     @Autowired
     private AreaService areaService;
 
-
+    /**
+     * 管理session相关的操作
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getshopmanagementinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {
