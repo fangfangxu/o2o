@@ -63,6 +63,18 @@ public class ShopServiceTest extends BaseTest {
         }
         shopService.modifyShop(shop,ins,"dabai.JPG");
 
-
     }
+
+    @Test
+    public void testGetShopList(){
+        Shop shopCondition=new Shop();
+        ShopCategory shopCategory=new ShopCategory();
+        shopCategory.setShopCategoryId(22L);
+        shopCondition.setShopCategory(shopCategory);
+        //limit 0,2
+        ShopExecution se=shopService.getShopList(shopCondition,3,2);
+        System.out.println(se.getShopList().size());
+        System.out.println(se.getCount());
+    }
+
 }

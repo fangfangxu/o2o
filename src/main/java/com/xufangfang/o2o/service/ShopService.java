@@ -9,6 +9,15 @@ import java.io.InputStream;
 
 public interface ShopService {
     /**
+     * 根据shopCondition分页返回相应店铺数据
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    public ShopExecution getShopList(Shop shopCondition,int pageIndex,int pageSize);
+
+    /**
      * 通过店铺id获取店铺信息
      * @param shopId
      * @return
