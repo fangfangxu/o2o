@@ -17,4 +17,10 @@ public class ShopAdminController {
     public String shoplList() {
         return "shop/shoplist";
     }
+
+    @RequestMapping("/shopmanagement")
+    public String shopmanagement() {
+        return "shop/shopmanagement";
+    }
+
 }
