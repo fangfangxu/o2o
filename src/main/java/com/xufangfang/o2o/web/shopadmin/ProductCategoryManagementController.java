@@ -1,7 +1,9 @@
 package com.xufangfang.o2o.web.shopadmin;
 
+import com.xufangfang.o2o.dto.Result;
 import com.xufangfang.o2o.entity.ProductCategory;
 import com.xufangfang.o2o.entity.Shop;
+import com.xufangfang.o2o.enums.ProductCategoryStateEnum;
 import com.xufangfang.o2o.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,19 +23,22 @@ public class ProductCategoryManagementController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 
-//	@RequestMapping(value = "/getproductcategorylist", method = RequestMethod.GET)
-//	@ResponseBody
-//	private Result<List<ProductCategory>> getProductCategoryList(HttpServletRequest request) {
-//		Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
-//		List<ProductCategory> list = null;
-//		if (currentShop != null && currentShop.getShopId() > 0) {
-//			list = productCategoryService.getProductCategoryList(currentShop.getShopId());
-//			return new Result<List<ProductCategory>>(true, list);
-//		} else {
-//			ProductCategoryStateEnum ps = ProductCategoryStateEnum.INNER_ERROR;
-//			return new Result<List<ProductCategory>>(false, ps.getState(), ps.getStateInfo());
-//		}
-//	}
+	@RequestMapping(value = "/getproductcategorylist", method = RequestMethod.GET)
+	@ResponseBody
+	private Result<List<ProductCategory>> getProductCategoryList(HttpServletRequest request) {
+//		Shop shop=new Shop();
+//		shop.setShopId(29L);
+//		request.getSession().setAttribute("currentShop",shop);
+		Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+		List<ProductCategory> list = null;
+		if (currentShop != null && currentShop.getShopId() > 0) {
+			list = productCategoryService.getProductCategoryList(currentShop.getShopId());
+			return new Result<List<ProductCategory>>(true, list);
+		} else {
+			ProductCategoryStateEnum ps = ProductCategoryStateEnum.INNER_ERROR;
+			return new Result<List<ProductCategory>>(false, ps.getState(), ps.getStateInfo());
+		}
+	}
 //	@RequestMapping(value = "/addproductcategorys", method = RequestMethod.POST)
 //	@ResponseBody
 //	private Map<String, Object> addProductCategorys(@RequestBody List<ProductCategory> productCategoryList,

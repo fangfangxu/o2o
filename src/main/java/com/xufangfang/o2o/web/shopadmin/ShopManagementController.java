@@ -43,6 +43,7 @@ public class ShopManagementController {
     private AreaService areaService;
 
     /**
+     * 登陆后调用
      * 管理session相关的操作
      * @param request
      * @return

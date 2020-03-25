@@ -813,7 +813,74 @@ PathUtil----->
 
     s.shop_name like '%${shopCondition.shopName}%' 
  
+(8)
+
+      /**
+       *  封装json对象，所有返回结果都是用它
+       * @param <T>
+       */
+      @Data
+      public class Result<T> {
+          private boolean success;//是否成功标志
+          private T data;//成功时返回的数据
+          private String errorMsg;//错误信息
+          private int errorCode;
+      
+          public Result(){
+      
+          }
+      
+          /**
+           * 成功时的构造器
+           * @param success
+           * @param data
+           */
+          public Result(boolean success,T data){
+                this.success=success;
+                this.data=data;
+          }
+      
+          /**
+           * 错误时的构造器
+           */
+          public Result(boolean success,int errorCode,String errorMsg){
+              this.success=success;
+              this.errorCode=errorCode;
+              this.errorMsg=errorMsg;
+          }
+      } 
  
+ (9)枚举类
  
+      public enum ProductCategoryStateEnum {
+          SUCCESS(1, "创建成功"),
+          INNER_ERROR(-1001, "操作失败"),
+          EMPTY_LIST(-1002, "添加数少于1");
  
+     private int state;
+ 
+     private String stateInfo;
+ 
+     private ProductCategoryStateEnum(int state, String stateInfo) {
+         this.state = state;
+         this.stateInfo = stateInfo;
+     }
+ 
+     public int getState() {
+         return state;
+     }
+ 
+     public String getStateInfo() {
+         return stateInfo;
+     }
+ 
+     public static ProductCategoryStateEnum stateOf(int index) {
+         for (ProductCategoryStateEnum state : values()) {
+             if (state.getState() == index) {
+                 return state;
+             }
+         }
+         return null;
+     }
+    }
                 

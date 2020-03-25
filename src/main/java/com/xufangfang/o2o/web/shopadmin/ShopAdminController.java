@@ -23,4 +23,9 @@ public class ShopAdminController {
         return "shop/shopmanagement";
     }
 
+    @RequestMapping(value = "/productcategorymanagement", method = RequestMethod.GET)
+    public String productcategorymanagement() {
+        return "shop/productcategorymanagement";
+    }
+
 }

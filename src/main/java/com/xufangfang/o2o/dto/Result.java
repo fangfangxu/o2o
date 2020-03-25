@@ -1,11 +1,12 @@
 package com.xufangfang.o2o.dto;
 
+import lombok.Data;
+
 /**
  *  封装json对象，所有返回结果都是用它
  * @param <T>
  */
-
-
+@Data
 public class Result<T> {
     private boolean success;//是否成功标志
     private T data;//成功时返回的数据
@@ -34,8 +35,4 @@ public class Result<T> {
         this.errorCode=errorCode;
         this.errorMsg=errorMsg;
     }
-
-
-
-
 }
