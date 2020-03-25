@@ -895,4 +895,39 @@ PathUtil----->
          }
      }
     
-                
+（11）Test可以设置方法执行顺序
+
+     @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+     public class ProductCategoryDaoTest extends BaseTest{       
+       @Test
+       public void A(){}
+       
+       @Test 
+       public void C(){}
+       @Test
+       public void B(){}
+       
+     }   
+     
+     以上方法执行顺序为：A、B、C      
+     
+    Junit 4.11里增加了指定测试方法执行顺序的特性：
+    测试类的执行顺序可通过对测试类添加注解 “@FixMethodOrder(value)” 来指定,其中value 为执行顺序；
+    
+    三种执行顺序可供选择：
+    - 默认（MethodSorters.DEFAULT）
+    - 按方法名（MethodSorters.NAME_ASCENDING）
+    - JVM（MethodSorters.JVM）
+    当没有指定任何顺序时，按默认来执行；
+    
+    详细说明
+    MethodSorters.DEFAULT
+    默认顺序由方法名hashcode值来决定，如果hash值大小一致，则按名字的字典顺序确定
+    MethodSorters.NAME_ASCENDING (推荐)
+    按方法名称的进行排序，由于是按字符的字典顺序，所以以这种方式指定执行顺序会始终保持一致；
+    MethodSorters.JVM
+    按JVM返回的方法名的顺序执行，此种方式下测试方法的执行顺序是不可预测的，即每次运行的顺序可能都不一样(JDK7里尤其如此)
+    备注
+    Junit里是通过反射机制得到某个Junit里的所有测试方法，并生成一个方法的数组，然后依次执行数组里的这些测试方法；
+    而当用annotation指定了执行顺序，Junit在得到测试方法的数组后，会根据指定的顺序对数组里的方法进行排序；
+  
