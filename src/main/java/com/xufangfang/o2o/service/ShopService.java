@@ -4,7 +4,6 @@ import com.xufangfang.o2o.dto.ShopExecution;
 import com.xufangfang.o2o.entity.Shop;
 import com.xufangfang.o2o.exceptions.ShopOperationException;
 
-import java.io.File;
 import java.io.InputStream;
 
 public interface ShopService {

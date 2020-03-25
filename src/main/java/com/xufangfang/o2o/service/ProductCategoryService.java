@@ -2,6 +2,8 @@ package com.xufangfang.o2o.service;
 
 
 import com.xufangfang.o2o.entity.ProductCategory;
+import com.xufangfang.o2o.dto.ProductCategoryExecution;
+import com.xufangfang.o2o.exceptions.ProductCategoryOperationException;
 
 import java.util.List;
 
@@ -13,14 +15,14 @@ public interface ProductCategoryService {
 	 * @return List<ProductCategory>
 	 */
 	List<ProductCategory> getProductCategoryList(long shopId);
-//	/**
-//	 *
-//	 * @param productCategoryList
-//	 * @return
-//	 * @throws ProductCategoryOperationException
-//	 */
-//	ProductCategoryExecution batchAddProductCategory(List<ProductCategory> productCategoryList)
-//			throws ProductCategoryOperationException;
+	/**
+	 *
+	 * @param productCategoryList
+	 * @return
+	 * @throws ProductCategoryOperationException
+	 */
+	ProductCategoryExecution batchAddProductCategory(List<ProductCategory> productCategoryList)
+			throws ProductCategoryOperationException;
 //	/**
 //	 * 将此类别下的商品里的类别id置为空，再删除掉该商品类别
 //	 * @param productCategoryId
