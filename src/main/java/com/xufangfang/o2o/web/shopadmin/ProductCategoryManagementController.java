@@ -41,7 +41,7 @@ public class ProductCategoryManagementController {
 			return new Result<List<ProductCategory>>(false, ps.getState(), ps.getStateInfo());
 		}
 	}
-	
+
 	@RequestMapping(value = "/addproductcategorys", method = RequestMethod.POST)
 	@ResponseBody
 	private Map<String, Object> addProductCategorys(@RequestBody List<ProductCategory> productCategoryList,
