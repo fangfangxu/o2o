@@ -1,5 +1,6 @@
 package com.xufangfang.o2o.service;
 
+import com.xufangfang.o2o.dto.ImageHolder;
 import com.xufangfang.o2o.dto.ShopExecution;
 import com.xufangfang.o2o.entity.Shop;
 import com.xufangfang.o2o.exceptions.ShopOperationException;
@@ -26,21 +27,17 @@ public interface ShopService {
     /**
      * 更新店铺
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution modifyShop(Shop shop,InputStream shopImgInputStream,String fileName) throws ShopOperationException;
+    ShopExecution modifyShop(Shop shop,ImageHolder thumbnail) throws ShopOperationException;
 
 
     /**
      * 添加店铺
      *
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
      * @return
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName);
+    ShopExecution addShop(Shop shop, ImageHolder thumbnail);
 }

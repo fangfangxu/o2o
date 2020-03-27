@@ -1,6 +1,7 @@
 package com.xufangfang.o2o.service;
 
 import com.xufangfang.o2o.BaseTest;
+import com.xufangfang.o2o.dto.ImageHolder;
 import com.xufangfang.o2o.dto.ShopExecution;
 import com.xufangfang.o2o.entity.Area;
 import com.xufangfang.o2o.entity.PersonInfo;
@@ -46,7 +47,8 @@ public class ShopServiceTest extends BaseTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ShopExecution se = shopService.addShop(shop, ins, shopImg.getName());
+        ImageHolder imageHolder=new ImageHolder(shopImg.getName(),ins);
+        ShopExecution se = shopService.addShop(shop,imageHolder);
         System.out.println(se.getState());
     }
 
@@ -61,7 +63,8 @@ public class ShopServiceTest extends BaseTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        shopService.modifyShop(shop,ins,"dabai.JPG");
+        ImageHolder imageHolder=new ImageHolder(shopImg.getName(),ins);
+        shopService.modifyShop(shop,imageHolder);
 
     }
 
